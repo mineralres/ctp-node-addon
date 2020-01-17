@@ -1,0 +1,28 @@
+{
+  "name": "ctp-node-addon",
+  "version": "1.0.0",
+  "description": "ctp node addon",
+  "main": "index.js",
+  "dependencies": {
+    "binary-parser-encoder": "^1.5.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mineralres/ctp-node-addon.git"
+  },
+  "keywords": [
+    "ctp"
+  ],
+  "author": "mineralres",
+  "license": "MIT",
+  "gypfile": true,
+  "bugs": {
+    "url": "https://github.com/mineralres/ctp-node-addon/issues"
+  },
+  "homepage": "https://github.com/mineralres/ctp-node-addon#readme"
+}

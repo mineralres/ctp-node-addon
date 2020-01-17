@@ -1,0 +1,6 @@
+build
+build1
+build2
+*.con
+node_modules
+bin
