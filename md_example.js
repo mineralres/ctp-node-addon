@@ -14,7 +14,7 @@ function toArrayBuffer(buf) {
     }
     return ab;
 }
-const mdapi = addon.CreateMdApi((t, d) => {
+const api = new addon.MdApi((t, d) => {
     switch (t) {
         case 'OnFrontConnected':
             requestID += 1;
@@ -23,10 +23,10 @@ const mdapi = addon.CreateMdApi((t, d) => {
             req.UserID = "059926";
             req.Password = "198612";
             const buff = new Uint8Array(ctp.CThostFtdcReqUserLoginFieldParser().encode(req));
-            addon.MdApiCall(mdapi, "ReqUserLogin", buff, requestID);
+            api.ReqUserLogin(buff, requestID);
             break
         case 'OnRspUserLogin':
-            addon.MdApiCall(mdapi, "SubscribeMarketData", ["rb2005", "ru2005"]);
+            api.SubscribeMarketData(["rb2005", "ru2005"]);
             break
         case 'OnRtnDepthMarketData':
             const md = mdParser.parse(Buffer.from(d));
@@ -38,8 +38,9 @@ const mdapi = addon.CreateMdApi((t, d) => {
 });
 // addon.MdApiCall(mdapi, "RegisterFront", "tcp://180.168.159.227:51213");
 // addon.MdApiCall(mdapi, "RegisterFront", "tcp://180.168.146.187:10131");
-addon.MdApiCall(mdapi, "RegisterFront", "tcp://180.168.146.187:10111");
-addon.MdApiCall(mdapi, "Init");
+api.RegisterFront("tcp://180.168.146.187:10131");
+api.Init();
+console.log('api', api)
 
 // console.log(addon.hello());
 var rl = readline.createInterface({

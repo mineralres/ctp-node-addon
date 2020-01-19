@@ -6,7 +6,7 @@ const iconv = require('iconv-lite');
 
 let requestID = 0;
 
-const api = addon.CreateTraderApi((t, d, errorID, errorMsg, requestID, isLast) => {
+const api = new addon.TraderApi((t, d, errorID, errorMsg, requestID, isLast) => {
     if (errorID != 0 && errorMsg && Buffer.from(errorMsg)[0] != 0) {
         errorMsg = iconv.decode(Buffer.from(errorMsg), 'GBK');
     } else {
@@ -21,20 +21,25 @@ const api = addon.CreateTraderApi((t, d, errorID, errorMsg, requestID, isLast) =
             req.UserID = "143650";
             req.Password = "198612";
             const buff = new Uint8Array(ctp.CThostFtdcReqUserLoginFieldParser().encode(req));
-            addon.TraderApiCall(api, "ReqUserLogin", buff, requestID);
+            api.ReqUserLogin(buff, requestID);
             break
         case 'OnRspUserLogin':
             const pRspUserLogin = ctp.CThostFtdcRspUserLoginFieldParser().parse(Buffer.from(d))
             console.log('OnRspUserLogin', t, d.byteLength, errorID, errorMsg, requestID, isLast, pRspUserLogin)
+            break
+        case 'OnRtnInstrumentStatus':
+            const status = ctp.CThostFtdcInstrumentStatusFieldParser().parse(Buffer.from(d))
+            console.log('OnRtnInstrumentStatus', status)
             break
         default:
             console.log('On Message ', t, d.byteLength)
     }
 });
 
-// addon.TraderApiCall(api, "RegisterFront", "tcp://180.168.146.187:10130");
-addon.TraderApiCall(api, "RegisterFront", "tcp://180.168.146.187:10101");
-addon.TraderApiCall(api, "Init");
+// addon.TraderApiCall(api, "RegisterFront", "tcp://180.168.146.187:10130"); // 全天站点
+api.RegisterFront("tcp://180.168.146.187:10101");
+api.Init();
+console.log('api = ', api, api.GetApiVersion())
 
 // console.log(addon.hello());
 var rl = readline.createInterface({
