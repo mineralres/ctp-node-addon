@@ -14,23 +14,26 @@ class TraderApi : public CThostFtdcTraderSpi,
                   public Napi::ObjectWrap<TraderApi> {
 public:
   void callJS(Message *msg) {
-    napi_status status = tsfn_.BlockingCall(msg, [](Napi::Env env,
-                                                    Function jsCallback,
-                                                    Message *msg) {
-      if (msg->argc_ == 2) {
-        jsCallback.Call({String::New(env, msg->type_)});
-      } else if (msg->argc_ == 6) {
-        jsCallback.Call({String::New(env, msg->type_),
-                         Napi::ArrayBuffer::New(env, (void *)msg->data_.data(),
-                                                msg->data_.size()),
-                         Napi::Number::New(env, msg->error_id_),
-                         Napi::ArrayBuffer::New(env, msg->error_msg_,
-                                                sizeof(msg->error_msg_)),
-                         Napi::Number::New(env, msg->request_id_),
-                         Napi::Boolean::New(env, msg->is_last_)});
-      }
-      delete msg;
-    });
+    napi_status status = tsfn_.BlockingCall(
+        msg, [](Napi::Env env, Function jsCallback, Message *msg) {
+          if (msg->argc_ == 2) {
+            jsCallback.Call({String::New(env, msg->type_)});
+          } else if (msg->argc_ == 6) {
+            Napi::Value ab;
+            if (msg->data_) {
+              ab = Napi::ArrayBuffer::New(env, msg->data_, msg->data_len_);
+            } else {
+              ab = Napi::ArrayBuffer::New(env, 0);
+            }
+            jsCallback.Call({String::New(env, msg->type_), ab,
+                             Napi::Number::New(env, msg->error_id_),
+                             Napi::ArrayBuffer::New(env, msg->error_msg_,
+                                                    sizeof(msg->error_msg_)),
+                             Napi::Number::New(env, msg->request_id_),
+                             Napi::Boolean::New(env, msg->is_last_)});
+          }
+          delete msg;
+        });
     if (status != napi_ok) {
       std::cout << "ERROR = " << status << std::endl;
     }

@@ -16,11 +16,10 @@ public:
   void callJS(Message *msg) {
     napi_status status = tsfn_.BlockingCall(
         msg, [](Napi::Env env, Function jsCallback, Message *msg) {
-          if (msg->data_.size() > 0) {
+          if (msg->data_) {
             jsCallback.Call({
                 String::New(env, msg->type_),
-                Napi::ArrayBuffer::New(env, (void *)msg->data_.data(),
-                                       msg->data_.size()),
+                Napi::ArrayBuffer::New(env, msg->data_, msg->data_len_),
             });
           } else {
             jsCallback.Call({String::New(env, msg->type_)});
