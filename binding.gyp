@@ -23,6 +23,13 @@
                     "library_dirs": [
                         "./ext/lib/windows/x64/ctp6.3.15",
                     ],
+                    "copies": [
+                        {
+                            "destination": "<(module_root_dir)/build/Release/",
+                            "files": ["<(module_root_dir)/ext/lib/windows/x64/ctp6.3.15/thostmduserapi_se.dll",
+                                      "<(module_root_dir)/ext/lib/windows/x64/ctp6.3.15/thosttraderapi_se.dll"]
+                        }
+                    ]
                 }]
             ]
         }

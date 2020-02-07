@@ -19,7 +19,7 @@ const api = new addon.TraderApi((t, d, errorID, errorMsg, requestID, isLast) => 
             let req = ctp.CThostFtdcReqUserLoginFieldInit();
             req.BrokerID = "9999";
             req.UserID = "143650";
-            req.Password = "198612";
+            req.Password = "pass";
             const buff = new Uint8Array(ctp.CThostFtdcReqUserLoginFieldParser().encode(req));
             api.ReqUserLogin(buff, requestID);
         }

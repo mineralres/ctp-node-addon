@@ -21,7 +21,6 @@ const api = new addon.MdApi((t, d) => {
             let req = ctp.CThostFtdcReqUserLoginFieldInit();
             req.BrokerID = "9999";
             req.UserID = "059926";
-            req.Password = "198612";
             const buff = new Uint8Array(ctp.CThostFtdcReqUserLoginFieldParser().encode(req));
             api.ReqUserLogin(buff, requestID);
             break

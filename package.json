@@ -1,6 +1,6 @@
 {
   "name": "ctp-node-addon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ctp node addon",
   "main": "index.js",
   "dependencies": {
