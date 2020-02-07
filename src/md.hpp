@@ -1,6 +1,6 @@
 
 #include "./common.hpp"
-#include "ctp6.3.15\\ThostFtdcMdApi.h"
+#include "ctp6.3.15//ThostFtdcMdApi.h"
 #include <assert.h>
 #include <chrono>
 #include <iostream>
@@ -30,7 +30,7 @@ public:
     }
   }
 
-  static Napi::Object MdApi::Init(Napi::Env env, Napi::Object exports) {
+  static Napi::Object Init(Napi::Env env, Napi::Object exports) {
     static Napi::FunctionReference constructor;
     Napi::HandleScope scope(env);
     Napi::Function func = DefineClass(
@@ -63,13 +63,15 @@ public:
   }
 
   // 创建行情API
-  MdApi::MdApi(const CallbackInfo &info) : Napi::ObjectWrap<MdApi>(info) {
+  MdApi(const CallbackInfo &info) : Napi::ObjectWrap<MdApi>(info) {
     Napi::Env env = info.Env();
 
     if (info.Length() < 1) {
-      throw TypeError::New(env, "Expected two arguments");
+      // throw TypeError::New(env, "Expected two arguments");
+      std::cout << "Expected two arguments" << std::endl;
     } else if (!info[0].IsFunction()) {
-      throw TypeError::New(env, "Expected first arg to be function");
+      // throw TypeError::New(env, "Expected first arg to be function");
+      std::cout << "Expected first arg to be function" << std::endl;
     }
 
     api_ = CThostFtdcMdApi::CreateFtdcMdApi();

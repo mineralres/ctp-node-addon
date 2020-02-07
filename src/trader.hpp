@@ -3,7 +3,7 @@
 #define TRADE_XX_3399_
 
 #include "./common.hpp"
-#include "ctp6.3.15\\ThostFtdcTraderApi.h"
+#include "ctp6.3.15//ThostFtdcTraderApi.h"
 #include <iostream>
 #include <mutex>
 #include <thread>
@@ -39,7 +39,7 @@ public:
     }
   }
 
-  static Napi::Object TraderApi::Init(Napi::Env env, Napi::Object exports) {
+  static Napi::Object Init(Napi::Env env, Napi::Object exports) {
     static Napi::FunctionReference constructor;
     Napi::HandleScope scope(env);
     Napi::Function func = DefineClass(
@@ -209,7 +209,7 @@ public:
     return exports;
   }
 
-  TraderApi::TraderApi(const Napi::CallbackInfo &info)
+  TraderApi(const Napi::CallbackInfo &info)
       : Napi::ObjectWrap<TraderApi>(info) {
     Napi::Env env = info.Env();
     Napi::HandleScope scope(env);

@@ -6,8 +6,8 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include "ctp6.3.15/ThostFtdcUserApiStruct.h"
 
-struct CThostFtdcRspInfoField;
 namespace addon {
 struct Message {
 public:
@@ -19,7 +19,7 @@ public:
   int32_t request_id_; // nRequestID
   bool is_last_;       // bIsLast
   int argc_;           //
-  Message(const char *t, void *d, size_t n)
+  Message(const char *t, const void *d, size_t n)
       : type_(t), data_(nullptr), data_len_(n), argc_(2) {
     if (d) {
       data_ = malloc(n);
