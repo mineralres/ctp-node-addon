@@ -129,14 +129,14 @@ private:
     for (size_t i = 0; i < arr.Length(); i++) {
       Napi::Value v = arr[i];
       std::string str = v.As<Napi::String>();
-      instruments[i] = new char[str.size()];
-      memcpy(instruments[i], str.c_str(), str.size());
+      instruments[i] = new char[str.size() + 1];
+      memcpy(instruments[i], str.c_str(), str.size() + 1);
     }
     int ret = api_->SubscribeMarketData(instruments, arr.Length());
     for (size_t i = 0; i < arr.Length(); i++) {
-      delete instruments[i];
+      delete[] instruments[i];
     }
-    delete instruments;
+    delete[] instruments;
     return Napi::Number::New(info.Env(), ret);
   }
 
@@ -146,14 +146,14 @@ private:
     for (size_t i = 0; i < arr.Length(); i++) {
       Napi::Value v = arr[i];
       std::string str = v.As<Napi::String>();
-      instruments[i] = new char[str.size()];
-      memcpy(instruments[i], str.c_str(), str.size());
+      instruments[i] = new char[str.size() + 1];
+      memcpy(instruments[i], str.c_str(), str.size() + 1);
     }
     int ret = api_->UnSubscribeMarketData(instruments, arr.Length());
     for (size_t i = 0; i < arr.Length(); i++) {
-      delete instruments[i];
+      delete[] instruments[i];
     }
-    delete instruments;
+    delete[] instruments;
     return Napi::Number::New(info.Env(), ret);
   }
 
@@ -163,14 +163,14 @@ private:
     for (size_t i = 0; i < arr.Length(); i++) {
       Napi::Value v = arr[i];
       std::string str = v.As<Napi::String>();
-      instruments[i] = new char[str.size()];
-      memcpy(instruments[i], str.c_str(), str.size());
+      instruments[i] = new char[str.size() + 1];
+      memcpy(instruments[i], str.c_str(), str.size() + 1);
     }
     int ret = api_->SubscribeForQuoteRsp(instruments, arr.Length());
     for (size_t i = 0; i < arr.Length(); i++) {
-      delete instruments[i];
+      delete[] instruments[i];
     }
-    delete instruments;
+    delete[] instruments;
     return Napi::Number::New(info.Env(), ret);
   }
 
@@ -180,14 +180,14 @@ private:
     for (size_t i = 0; i < arr.Length(); i++) {
       Napi::Value v = arr[i];
       std::string str = v.As<Napi::String>();
-      instruments[i] = new char[str.size()];
-      memcpy(instruments[i], str.c_str(), str.size());
+      instruments[i] = new char[str.size() + 1];
+      memcpy(instruments[i], str.c_str(), str.size() + 1);
     }
     int ret = api_->UnSubscribeForQuoteRsp(instruments, arr.Length());
     for (size_t i = 0; i < arr.Length(); i++) {
-      delete instruments[i];
+      delete[] instruments[i];
     }
-    delete instruments;
+    delete[] instruments;
     return Napi::Number::New(info.Env(), ret);
   }
 
